@@ -122,9 +122,18 @@ def health():
 
 @app.post("/recommend")
 def recommend(request: QueryRequest):
-    try:
-        result_text = rag_recommend(request.query)
-        return {"recommendations": result_text}
-    except Exception as e:
-        print("API ERROR >>>", e)
-        return {"error": str(e)}
+    raw_results = rag_recommend(request.query)
+
+    final_results = []
+    for r in raw_results:
+        final_results.append({
+            "url": r["url"],
+            "name": r["name"],
+            "adaptive_support": "No",
+            "description": r.get("description", "Assessment for skill evaluation"),
+            "duration": 30,
+            "remote_support": "Yes",
+            "test_type": ["K", "P"]
+        })
+
+    return {"recommended_assessments": final_results}
