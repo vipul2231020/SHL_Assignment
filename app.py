@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-API_URL = "http://127.0.0.1:8000/recommend"
+API_URL = "https://shl-recommend-api.onrender.com/recommend"
 
 st.set_page_config(
     page_title="SHL Assessment Recommendation System",
